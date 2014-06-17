@@ -19,6 +19,8 @@ class UsersController < ApplicationController
 	    # mude de params[:user] para user_params.
 	    # O método params retorna um hash com todos os parâmetros enviados pelo usuário
 	    if @user.save
+	      # envio email	
+	      Signup.confirm_email(@user).deliver
 	      redirect_to @user,
 	                  notice: 'Cadastro criado com sucesso!'
 		else

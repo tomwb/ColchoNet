@@ -1,11 +1,19 @@
 Rails.application.routes.draw do
-  resources :rooms
-  resources :users
+  LOCALES = /en|pt\-BR/
+
+  scope "(:locale)", locale: LOCALES do
+    resources :rooms
+    resources :users
+  end
+  
+  resource :confirmation, only: [:show]
+  resource :user_sessions, only: [:create, :new, :destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  get '/:locale' => 'home#index', locale: LOCALES
   root 'home#index'
 
   # Example of regular route:
